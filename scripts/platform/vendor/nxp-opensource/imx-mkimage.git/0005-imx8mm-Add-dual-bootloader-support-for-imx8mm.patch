@@ -1,0 +1,28 @@
+From e787f9e61e229b67ccc7367a2ccdcb775972d47c Mon Sep 17 00:00:00 2001
+From: Pitchaiah Prakash <pitchaiah.p@variscite.com>
+Date: Mon, 22 Apr 2024 19:36:50 +0200
+Subject: [PATCH] imx8mm: Add dual bootloader support for imx8mm.
+
+Signed-off-by: Pitchaiah Prakash <pitchaiah.p@variscite.com>
+---
+ iMX8M/soc.mak | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/iMX8M/soc.mak b/iMX8M/soc.mak
+index 9d7556f..e412b0f 100644
+--- a/iMX8M/soc.mak
++++ b/iMX8M/soc.mak
+@@ -346,6 +346,10 @@ flash_ddr4_evk_flexspi: $(MKIMG) u-boot-spl-ddr4.bin u-boot-ddr4-evk.itb
+ flash_lpddr4_ddr4_evk_no_hdmi: $(MKIMG) u-boot-spl-lpddr4-ddr4.bin u-boot-lpddr4-ddr4-evk.itb
+ 	./mkimage_imx8 -version $(VERSION) -fit -loader u-boot-spl-lpddr4-ddr4.bin $(SPL_LOAD_ADDR) -second_loader u-boot-lpddr4-ddr4-evk.itb 0x40200000 0x60000 -out $(OUTIMG)
+ 
++flash_lpddr4_ddr4_evk_no_hdmi_dual_bootloader: $(MKIMG) u-boot-spl-lpddr4-ddr4.bin u-boot-lpddr4-ddr4-evk.itb
++	./mkimage_imx8 -version $(VERSION) -fit -loader u-boot-spl-lpddr4-ddr4.bin $(SPL_LOAD_ADDR) -out $(OUTIMG)
++	./mkimage_imx8 -fit_ivt u-boot-lpddr4-ddr4-evk.itb 0x40200000 0x0 -out u-boot-ivt.itb
++
+ flash_hdmi_spl_uboot: flash_evk
+ 
+ flash_dp_spl_uboot: flash_dp_evk
+-- 
+2.43.2
+
